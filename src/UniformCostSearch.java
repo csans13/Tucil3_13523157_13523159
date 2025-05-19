@@ -7,7 +7,7 @@ import java.util.Set;
 public class UniformCostSearch extends Solver {
     
     public UniformCostSearch(Board initialBoard) {
-        super(initialBoard); // UCS tidak menggunakan heuristik
+        super(initialBoard, 0); // UCS tidak menggunakan heuristic
     }
     
     @Override
