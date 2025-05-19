@@ -1,72 +1,85 @@
-import java.util.Objects;
-
 public class Piece {
-    private char label;
-    private char orientation; // 'H' or 'V'
-    private int x, y;
+    private char id;
+    private int row;
+    private int col;
     private int length;
+    private boolean isHorizontal;
+    private boolean isPrimary;
 
-    public Piece(char label, char orientation, int x, int y, int length) {
-        if (orientation != 'H' && orientation != 'V') {
-            throw new IllegalArgumentException("Invalid orientation: " + orientation);
-        }
-        if (length <= 0) {
-            throw new IllegalArgumentException("Length must be positive.");
-        }
-
-        this.label = label;
-        this.orientation = orientation;
-        this.x = x;
-        this.y = y;
+    public Piece(char id, int row, int col, int length, boolean isHorizontal, boolean isPrimary) {
+        this.id = id;
+        this.row = row;
+        this.col = col;
         this.length = length;
+        this.isHorizontal = isHorizontal;
+        this.isPrimary = isPrimary;
     }
 
-    public char getLabel() {
-        return label;
+    public Piece copy() {
+        return new Piece(id, row, col, length, isHorizontal, isPrimary);
     }
 
-    public char getOrientation() {
-        return orientation;
+    public char getId() {
+        return id;
     }
 
-    public int getX() {
-        return x;
+    public int getRow() {
+        return row;
     }
 
-    public int getY() {
-        return y;
+    public int getCol() {
+        return col;
     }
 
     public int getLength() {
         return length;
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public boolean isHorizontal() {
+        return isHorizontal;
     }
 
-    public int getHash() {
-        return Objects.hash(label, orientation, x, y, length);
+    public boolean isPrimary() {
+        return isPrimary;
     }
 
-    public void movePlus() {
-        if (orientation == 'H') {
-            y += 1;
+    public int getEndRow() {
+        if (isHorizontal) {
+            return row;
         } else {
-            x += 1;
+            return row + length - 1;
         }
     }
 
-    public void moveMinus() {
-        if (orientation == 'H') {
-            y -= 1;
+    public int getEndCol() {
+        if (isHorizontal) {
+            return col + length - 1;
         } else {
-            x -= 1;
+            return col;
         }
     }
 
-    public Piece copy() {
-        return new Piece(label, orientation, x, y, length);
+    public void move(int amount) {
+        if (isHorizontal) {
+            col += amount;
+        } else {
+            row += amount;
+        }
+    }
+
+    public boolean occupies(int r, int c) {
+        if (isHorizontal) {
+            return r == row && c >= col && c <= col + length - 1;
+        } else {
+            return c == col && r >= row && r <= row + length - 1;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Piece %c at (%d,%d), length=%d, %s, %s", 
+                id, row, col, length, 
+                isHorizontal ? "horizontal" : "vertical",
+                isPrimary ? "primary" : "non-primary");
     }
 }
