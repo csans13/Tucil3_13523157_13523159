@@ -6,6 +6,7 @@ public class Piece {
     private boolean isHorizontal;
     private boolean isPrimary;
 
+    // Konstruktor Piece
     public Piece(char id, int row, int col, int length, boolean isHorizontal, boolean isPrimary) {
         this.id = id;
         this.row = row;
@@ -19,18 +20,22 @@ public class Piece {
         return new Piece(id, row, col, length, isHorizontal, isPrimary);
     }
 
+    // Getter id pada Piece
     public char getId() {
         return id;
     }
 
+    // Getter baris awal Piece
     public int getRow() {
         return row;
     }
 
+    // Getter  kolom awal Piece
     public int getCol() {
         return col;
     }
 
+    // Getter length Piece
     public int getLength() {
         return length;
     }
@@ -43,6 +48,7 @@ public class Piece {
         return isPrimary;
     }
 
+    // Untuk mendapatkan baris akhir Piece
     public int getEndRow() {
         if (isHorizontal) {
             return row;
@@ -51,6 +57,7 @@ public class Piece {
         }
     }
 
+    // Untuk mendapatkan kolom akhir Piece
     public int getEndCol() {
         if (isHorizontal) {
             return col + length - 1;
@@ -59,6 +66,7 @@ public class Piece {
         }
     }
 
+    // Menggerakkan Piece sejumlah amount
     public void move(int amount) {
         if (isHorizontal) {
             col += amount;
@@ -67,6 +75,7 @@ public class Piece {
         }
     }
 
+    // Mengecek apakah Piece menempati sel
     public boolean occupies(int r, int c) {
         if (isHorizontal) {
             return r == row && c >= col && c <= col + length - 1;
