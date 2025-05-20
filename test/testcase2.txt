@@ -1,0 +1,8 @@
+6 6
+11
+ A.BB..
+ A.CCC.
+ DDFG..
+KH.FGPP
+ H.IIIJ
+ MMLL.J
