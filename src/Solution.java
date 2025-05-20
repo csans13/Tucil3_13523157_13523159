@@ -29,7 +29,7 @@ public class Solution {
             }
 
             System.out.println("Gerakan " + i + ": " + piece.getId() + "-" + direction);
-            System.out.println(move.getBoard().toString());
+            printBoardWithFrame(move.getBoard(), move.getPieceIdx());
         }
     }
 
