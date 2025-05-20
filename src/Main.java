@@ -534,72 +534,93 @@ public class Main {
             String line = reader.readLine();
             if (line == null) throw new IOException("Unexpected end of file when reading grid");
             originalLines.add(line);
-            
+
             if (line.trim().indexOf('K') >= 0 && line.trim().length() <= cols) {
                 exitSide = 'T';
                 externalKCol = line.indexOf('K');
-                
                 line = reader.readLine();
                 if (line == null) throw new IOException("Unexpected end of file after top K row");
                 originalLines.add(line);
             }
-            
+
             for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
                 String currentLine = (rowIdx == 0) ? line : reader.readLine();
-                if (currentLine == null && rowIdx < rows - 1) {
-                    throw new IOException("Unexpected end of file at row " + (rowIdx + 1));
-                } else if (currentLine.length() < cols) {
-                    throw new IOException("Error: Board must be exactly " + (rows) + "x" + (cols));
+                if (currentLine == null) {
+                    throw new IOException("Invalid board dimensions");
                 }
-                
+
+                String trimmed = currentLine.trim();
+                boolean leftExit = trimmed.startsWith("K");
+                boolean rightExit = trimmed.endsWith("K") && trimmed.length() > 1;
+
+                int nonSpaceCount = 0;
+                for (char c : currentLine.toCharArray()) {
+                    if (c != ' ') nonSpaceCount++;
+                }
+                if (leftExit) nonSpaceCount--;
+                if (rightExit) nonSpaceCount--;
+
+                if (nonSpaceCount < cols) {
+                    throw new IOException("Invalid board dimensions");
+                }
+                if (nonSpaceCount > cols) {
+                    throw new IOException("Invalid board dimensions");
+                }
+
                 if (rowIdx > 0) {
                     originalLines.add(currentLine);
                 }
-                
+
                 int kIndex = currentLine.indexOf('K');
-                
+
                 if (kIndex == 0) {
                     exitSide = 'L';
                     externalKRow = rowIdx;
-                    
                     if (currentLine.length() > 1) {
                         fillGridRow(grid, rowIdx, currentLine.substring(1));
                     }
-                } 
+                }
                 else if (kIndex > 0 && kIndex < cols) {
                     throw new IOException("The exit (K) was found inside the grid");
                 }
                 else if (kIndex >= cols) {
                     exitSide = 'R';
                     externalKRow = rowIdx;
-                    
                     fillGridRow(grid, rowIdx, currentLine);
                 }
                 else {
                     fillGridRow(grid, rowIdx, currentLine);
                 }
             }
-            
+
             String bottomLine = reader.readLine();
-            if (bottomLine != null && bottomLine.trim().indexOf('K') >= 0) {
-                originalLines.add(bottomLine);
-                exitSide = 'B';
-                externalKCol = bottomLine.indexOf('K');
-            } else if (bottomLine != null) {
-                throw new IOException("Error: Board must be exactly " + (rows) + "x" + (cols));
+            if (bottomLine != null && bottomLine.trim().length() > 0) {
+                if (bottomLine.trim().indexOf('K') >= 0 && bottomLine.trim().length() <= cols) {
+                    originalLines.add(bottomLine);
+                    exitSide = 'B';
+                    externalKCol = bottomLine.indexOf('K');
+                    String afterBottomK = reader.readLine();
+                    while (afterBottomK != null && afterBottomK.trim().isEmpty()) {
+                        afterBottomK = reader.readLine();
+                    }
+                    if (afterBottomK != null) {
+                        throw new IOException("Invalid board dimensions");
+                    }
+                } else {
+                    throw new IOException("Invalid board dimensions");
+                }
             }
-            
+
             int primaryPieceRow = -1;
             int primaryPieceCol = -1;
             boolean primaryIsHorizontal = false;
-            
+
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     if (grid[i][j] == 'P') {
                         if (primaryPieceRow == -1) {
                             primaryPieceRow = i;
                             primaryPieceCol = j;
-                            
                             if (j + 1 < cols && grid[i][j + 1] == 'P') {
                                 primaryIsHorizontal = true;
                             }
@@ -607,7 +628,7 @@ public class Main {
                     }
                 }
             }
-            
+
             if (primaryPieceRow >= 0 && primaryPieceCol >= 0) {
                 if ((exitSide == 'L' || exitSide == 'R') && !primaryIsHorizontal) {
                     throw new IOException("Exit orientation (horizontal) doesn't match primary piece orientation (vertical)");
@@ -615,19 +636,19 @@ public class Main {
                     throw new IOException("Exit orientation (vertical) doesn't match primary piece orientation (horizontal)");
                 }
             }
-            
+
             boolean hasPrimary = primaryPieceRow >= 0;
             if (!hasPrimary) {
                 throw new IOException("No primary vehicle (P) found on the board");
             }
-            
+
             if (externalKRow == -1 && externalKCol == -1) {
                 throw new IOException("No exit (K) found at any edge");
             }
-            
+
             int actualVehicleCount = 0;
             boolean[] vehicleFound = new boolean[128];
-            
+
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
                     char c = grid[i][j];
@@ -637,21 +658,19 @@ public class Main {
                     }
                 }
             }
-            
+
             if (actualVehicleCount != numNonPrimaryVehicles) {
                 System.out.println(YELLOW + "Warning: Number of non-primary vehicles in file (" +
                         numNonPrimaryVehicles + ") doesn't match actual count (" +
                         actualVehicleCount + ")" + RESET);
             }
-            
+
             Board board = new Board(grid, rows, cols);
-            
             board.setExternalKRow(externalKRow);
             board.setExternalKCol(externalKCol);
             board.setExitSide(exitSide);
-            
             board.setOriginalLines(originalLines);
-            
+
             return board;
         } catch (IOException e) {
             throw e;
