@@ -16,6 +16,7 @@ public class Node implements Comparable<Node> {
         this.pieceIdx = -1;
         this.moveAmount = 0;
         this.cost = 0;
+        this.heuristic = board.getHeuristicValue(heuristicChoice);
     }
 
     // Node hasil dari pergerakan
@@ -25,6 +26,7 @@ public class Node implements Comparable<Node> {
         this.pieceIdx = pieceIdx;
         this.moveAmount = moveAmount;
         this.cost = parent.cost + 1;
+        this.heuristic = board.getHeuristicValue(heuristicChoice);
     }
 
     public List<Node> getPath() {
