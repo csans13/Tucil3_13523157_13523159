@@ -382,7 +382,7 @@ public class Main {
         } catch (InterruptedException e) {}
     }
 
-        private static void printBoardWithFrame(Board board) {
+    private static void printBoardWithFrame(Board board) {
         char[][] grid = board.getGrid();
         int rows = board.getRows();
         int cols = board.getCols();
@@ -514,7 +514,7 @@ public class Main {
                 BRIGHT_BLUE + "■ " + RESET + "Other Vehicles");
     }
 
-        private static Board readInputFile(String filePath) throws IOException {
+    private static Board readInputFile(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String dimensionLine = reader.readLine();
             if (dimensionLine == null) {
