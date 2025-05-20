@@ -3,6 +3,15 @@ import java.io.IOException;
 import java.util.List;
 
 public class Solution {
+    private static final String RESET = Main.RESET;
+    private static final String BRIGHT_RED = Main.BRIGHT_RED;
+    private static final String BRIGHT_GREEN = Main.BRIGHT_GREEN;
+    private static final String BRIGHT_YELLOW = Main.BRIGHT_YELLOW;
+    private static final String BRIGHT_BLUE = Main.BRIGHT_BLUE;
+    private static final String BRIGHT_CYAN = Main.BRIGHT_CYAN;
+    private static final String BRIGHT_WHITE = Main.BRIGHT_WHITE;
+    private static final String BOLD = Main.BOLD;
+
     private List<Node> path;
 
     public Solution(List<Node> path) {
@@ -10,11 +19,11 @@ public class Solution {
     }
 
     public List<Node> getMoves() {
-        return path.subList(1, path.size()); 
+        return path.subList(1, path.size());
     }
 
     public void printSteps() {
-        System.out.println("Papan Awal:");
+        System.out.println(BOLD + BRIGHT_CYAN + "Papan Awal" + RESET);
         printBoardWithFrame(path.get(0).getBoard(), -1);
 
         for (int i = 1; i < path.size(); i++) {
@@ -28,13 +37,15 @@ public class Solution {
                 direction = move.getMoveAmount() > 0 ? "down" : "up";
             }
 
-            System.out.println("Gerakan " + i + ": " + piece.getId() + "-" + direction);
+            System.out.println("\n" + BOLD + BRIGHT_CYAN + "Gerakan " + i + ": " +
+                    BRIGHT_YELLOW + piece.getId() + "-" + direction + RESET);
+
             printBoardWithFrame(move.getBoard(), move.getPieceIdx());
         }
     }
 
     public void printStepsAnimated() {
-        System.out.println("Papan Awal");
+        System.out.println(BOLD + BRIGHT_CYAN + "Papan Awal" + RESET);
         printBoardWithFrame(path.get(0).getBoard(), -1);
 
         try {
@@ -51,7 +62,9 @@ public class Solution {
 
                 Thread.sleep(800);
 
-                System.out.println("Gerakan " + i + ": " + piece.getId() + "-" + direction);
+                System.out.println("\n" + BOLD + BRIGHT_CYAN + "Gerakan " + i + ": " +
+                        BRIGHT_YELLOW + piece.getId() + "-" + direction + RESET);
+
                 printBoardWithFrame(move.getBoard(), move.getPieceIdx());
             }
         } catch (InterruptedException e) {}
@@ -103,13 +116,13 @@ public class Solution {
                     }
                     
                     if (index == 0) {
-                        System.out.println("P (Berhasil Keluar)");
+                        System.out.println(BRIGHT_RED + "P (Berhasil Keluar)" + RESET);
                     } else if (index == 1) {
-                        System.out.println("P");
+                        System.out.println(BRIGHT_RED + "P" + RESET);
                     } else if (index == 2) {
                         System.out.println();
                     } else if (index == 3) {
-                        System.out.println("K");                        
+                        System.out.println(BRIGHT_GREEN + "K" + RESET);                        
                     }
                 }
             } else {
@@ -119,29 +132,29 @@ public class Solution {
                     System.out.print(" ");
                 }
                 
-                System.out.println("K");
+                System.out.println(BRIGHT_GREEN + "K" + RESET);
             }
         }
 
         if (exitSide == 'L' && isSolved) {
-            System.out.print("    " + "╔");
+            System.out.print("    " + BRIGHT_CYAN + "╔");
         } else if (exitSide == 'L') {
-            System.out.print(" " + "╔");
+            System.out.print(" " + BRIGHT_CYAN + "╔");
         } else {
-            System.out.print("╔");
+            System.out.print(BRIGHT_CYAN + "╔");
         }
         
         for (int j = 0; j < cols; j++) {
             System.out.print("═");
         }
-        System.out.println("╗");
+        System.out.println("╗" + RESET);
 
         for (int i = 0; i < rows; i++) {
             if (exitSide == 'L' && i == primaryRow) {
                 if (isSolved) {
-                    System.out.print("PP " + "K");
+                    System.out.print(BRIGHT_RED + "PP " + BRIGHT_GREEN + "K" + RESET);
                 } else {
-                    System.out.print("K");
+                    System.out.print(BRIGHT_GREEN + "K" + RESET);
                 }
             } else {
                 if (exitSide == 'L' && isSolved) {
@@ -151,7 +164,7 @@ public class Solution {
                 }
             }
             
-            System.out.print("║");
+            System.out.print(BRIGHT_CYAN + "║" + RESET);
 
             for (int j = 0; j < cols; j++) {
                 char cell = grid[i][j];
@@ -159,48 +172,48 @@ public class Solution {
                     (isSolved && exitSide == 'L' && i == externalKRow && cell == 'P') ||
                     (isSolved && exitSide == 'T' && j == externalKCol && cell == 'P') ||
                     (isSolved && exitSide == 'B' && j == externalKCol && cell == 'P')) {
-                    System.out.print("·");
+                    System.out.print(BRIGHT_WHITE + "·" + RESET);
                 } else if (cell == 'P') {
-                    System.out.print("P");
+                    System.out.print(BRIGHT_RED + "P" + RESET);
                 } else if (cell == movedPieceId) {
-                    System.out.print(cell);
+                    System.out.print(BRIGHT_YELLOW + cell + RESET);
                 } else if (cell == '.') {
-                    System.out.print("·");
+                    System.out.print(BRIGHT_WHITE + "·" + RESET);
                 } else if (cell == 'K') {
-                    System.out.print("·");
+                    System.out.print(BRIGHT_WHITE + "·" + RESET);
                 } else {
-                    System.out.print(cell);
+                    System.out.print(BRIGHT_BLUE + cell + RESET);
                 }
             }
             
             if (exitSide == 'R' && i == primaryRow) {
-                System.out.print("║" + "K");
+                System.out.print(BRIGHT_CYAN + "║" + RESET + BRIGHT_GREEN + "K " + RESET);
                 if (isSolved) {
-                    System.out.print(" " + "PP (Berhasil Keluar)");
+                    System.out.print(BRIGHT_RED + "PP (Berhasil Keluar)" + RESET);
                 }
             } else {
-                System.out.print("║");
+                System.out.print(BRIGHT_CYAN + "║" + RESET);
             }
             
             if (exitSide == 'L' && i == primaryRow && isSolved) {
-                System.out.print(" (Berhasil Keluar)");
+                System.out.print(BRIGHT_RED + " (Berhasil Keluar)" + RESET);
             }
             
             System.out.println();
         }
 
         if (exitSide == 'L' && isSolved) {
-            System.out.print("    " + "╚");
+            System.out.print("    " + BRIGHT_CYAN + "╚");
         } else if (exitSide == 'L') {
-            System.out.print(" " + "╚");
+            System.out.print(" " + BRIGHT_CYAN + "╚");
         } else {
-            System.out.print("╚");
+            System.out.print(BRIGHT_CYAN + "╚");
         }
 
         for (int j = 0; j < cols; j++) {
             System.out.print("═");
         }
-        System.out.println("╝");
+        System.out.println("╝" + RESET);
 
         if (exitSide == 'B') {
             if (isSolved) {
@@ -212,13 +225,13 @@ public class Solution {
                     }
                     
                     if (index == 0) {
-                        System.out.println("K");
+                        System.out.println(BRIGHT_GREEN + "K" + RESET);
                     } else if (index == 1) {
                         System.out.println();                        
                     } else if (index == 2) {
-                        System.out.println("P");
+                        System.out.println(BRIGHT_RED + "P" + RESET);
                     } else if (index == 3) {
-                        System.out.println("P (Berhasil Keluar)");
+                        System.out.println(BRIGHT_RED + "P (Berhasil Keluar)" + RESET);
                     }
                 }
             } else {
@@ -228,18 +241,18 @@ public class Solution {
                     System.out.print(" ");
                 }
                 
-                System.out.println("K");
+                System.out.println(BRIGHT_GREEN + "K" + RESET);
             }
         }
 
         if (movedPieceIdx >= 0) {
-            System.out.println("■ " + "Primary Piece (P)  " +
-                    "■ " + "Exit (K)  " +
-                    "■ " + "Moved Piece (" + movedPieceId + ")");
+            System.out.println(BRIGHT_RED + "■ " + RESET + "Primary Piece (P)  " +
+                    BRIGHT_GREEN + "■ " + RESET + "Exit (K)  " +
+                    BRIGHT_YELLOW + "■ " + RESET + "Moved Piece (" + movedPieceId + ")");
         } else {
-            System.out.println("■ " + "Primary Piece (P)  " +
-                    "■ " + "Exit (K)  " +
-                    "■ " + "Other Pieces");
+            System.out.println(BRIGHT_RED + "■ " + RESET + "Primary Piece (P)  " +
+                    BRIGHT_GREEN + "■ " + RESET + "Exit (K)  " +
+                    BRIGHT_BLUE + "■ " + RESET + "Other Pieces");
         }
     }
 

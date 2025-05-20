@@ -6,6 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String PURPLE = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String WHITE = "\u001B[37m";
+
+    public static final String BRIGHT_RED = "\u001B[91m";
+    public static final String BRIGHT_GREEN = "\u001B[92m";
+    public static final String BRIGHT_YELLOW = "\u001B[93m";
+    public static final String BRIGHT_BLUE = "\u001B[94m";
+    public static final String BRIGHT_PURPLE = "\u001B[95m";
+    public static final String BRIGHT_CYAN = "\u001B[96m";
+    public static final String BRIGHT_WHITE = "\u001B[97m";
+
+    public static final String BG_RED = "\u001B[41m";
+    public static final String BG_GREEN = "\u001B[42m";
+    public static final String BG_YELLOW = "\u001B[43m";
+    public static final String BG_BLUE = "\u001B[44m";
+    public static final String BG_PURPLE = "\u001B[45m";
+    public static final String BG_CYAN = "\u001B[46m";
+
+    public static final String BOLD = "\u001B[1m";
+    public static final String UNDERLINE = "\u001B[4m";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         boolean continueProgram = true;
@@ -15,31 +42,31 @@ public class Main {
         while (continueProgram) {
             try {
                 if (initialBoard == null) {
-                    System.out.println("Please enter the input file path:");
-                    System.out.print("➤ ");
+                    System.out.println(BOLD + BRIGHT_CYAN + "Please enter the input file path:" + RESET);
+                    System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                     String filePath = scanner.nextLine();
 
                     if (filePath.trim().isEmpty()) {
-                        System.out.println("✗ Error: File path cannot be empty. Please try again.");
+                        System.out.println(BRIGHT_RED + "✗ Error: File path cannot be empty. Please try again." + RESET);
                         continue;
                     }
 
-                    System.out.println("\n✓ Loading puzzle file...");
+                    System.out.println(BRIGHT_PURPLE + "\n✓ Loading puzzle file..." + RESET);
 
                     try {
                         long startReadTime = System.currentTimeMillis();
                         initialBoard = readInputFile(filePath);
                         long endReadTime = System.currentTimeMillis();
 
-                        System.out.println("✓ File loaded successfully in " +
-                                (endReadTime - startReadTime) + "ms!");
+                        System.out.println(BRIGHT_GREEN + "✓ File loaded successfully in " +
+                                (endReadTime - startReadTime) + "ms!" + RESET);
                     } catch (IOException e) {
-                        System.out.println("✗ Error loading file: " + e.getMessage());
+                        System.out.println(BRIGHT_RED + "✗ Error loading file: " + e.getMessage() + RESET);
 
                         boolean validTryAgainChoice = false;
                         while (!validTryAgainChoice) {
-                            System.out.println("Do you want to try another file? (y/n)");
-                            System.out.print("➤ ");
+                            System.out.println(BRIGHT_CYAN + "Do you want to try another file? (y/n)" + RESET);
+                            System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                             String tryAgain = scanner.nextLine();
 
                             if (tryAgain.equalsIgnoreCase("y")) {
@@ -48,24 +75,24 @@ public class Main {
                                 validTryAgainChoice = true;
                                 continueProgram = false;
                             } else {
-                                System.out.println("✗ Invalid input. Please enter 'y' or 'n'.");
+                                System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter 'y' or 'n'." + RESET);
                             }
                         }
                         continue;
                     }
                 }
 
-                System.out.println("\n" + "⬢ Initial Board:");
+                System.out.println("\n" + BOLD + BRIGHT_CYAN + "⬢ Initial Board:" + RESET);
                 printBoardWithFrame(initialBoard);
 
                 boolean validAlgorithmChoice = false;
                 int algorithmChoice = 0;
 
                 while (!validAlgorithmChoice) {
-                    System.out.println("\n" + "⬢ Select Algorithm:");
+                    System.out.println("\n" + BOLD + BRIGHT_CYAN + "⬢ Select Algorithm:" + RESET);
                     printAlgorithmMenu();
 
-                    System.out.print("➤ Enter your choice (1-4): ");
+                    System.out.print(BRIGHT_YELLOW + "➤ Enter your choice (1-4): " + RESET);
                     String algorithmInput = scanner.nextLine();
 
                     try {
@@ -73,10 +100,10 @@ public class Main {
                         if (algorithmChoice >= 1 && algorithmChoice <= 4) {
                             validAlgorithmChoice = true;
                         } else {
-                            System.out.println("✗ Invalid input. Please enter a number between 1 and 4.");
+                            System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter a number between 1 and 4." + RESET);
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("✗ Invalid input. Please enter a valid number.");
+                        System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter a valid number." + RESET);
                     }
                 }
 
@@ -85,10 +112,10 @@ public class Main {
                     boolean validHeuristicChoice = false;
 
                     while (!validHeuristicChoice) {
-                        System.out.println("\n" + "⬢ Select Heuristic:");
+                        System.out.println("\n" + BOLD + BRIGHT_CYAN + "⬢ Select Heuristic:" + RESET);
                         printHeuristicMenu();
 
-                        System.out.print("➤ Enter your choice (1-2): ");
+                        System.out.print(BRIGHT_YELLOW + "➤ Enter your choice (1-2): " + RESET);
                         String heuristicInput = scanner.nextLine();
 
                         try {
@@ -96,10 +123,10 @@ public class Main {
                             if (heuristicChoice >= 1 && heuristicChoice <= 2) {
                                 validHeuristicChoice = true;
                             } else {
-                                System.out.println("✗ Invalid input. Please enter either 1 or 2.");
+                                System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter either 1 or 2." + RESET);
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println("✗ Invalid input. Please enter a valid number.");
+                            System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter a valid number." + RESET);
                         }
                     }
                 }
@@ -113,8 +140,8 @@ public class Main {
                     boolean validBeamWidth = false;
 
                     while (!validBeamWidth) {
-                        System.out.println("\n" + "Enter beam width:");
-                        System.out.print("➤ ");
+                        System.out.println("\n" + BRIGHT_CYAN + "Enter beam width (recommended: 3-5):" + RESET);
+                        System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                         String beamWidthInput = scanner.nextLine();
 
                         try {
@@ -122,10 +149,10 @@ public class Main {
                             if (beamWidth >= 1) {
                                 validBeamWidth = true;
                             } else {
-                                System.out.println("✗ Beam width must be a positive integer.");
+                                System.out.println(BRIGHT_RED + "✗ Beam width must be a positive integer." + RESET);
                             }
                         } catch (NumberFormatException e) {
-                            System.out.println("✗ Invalid input. Please enter a valid number.");
+                            System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter a valid number." + RESET);
                         }
                     }
                 }
@@ -151,9 +178,9 @@ public class Main {
                         throw new IllegalArgumentException("Invalid algorithm choice");
                 }
 
-                System.out.println("\n" + "⬢ Running " + algorithmName +
+                System.out.println("\n" + BRIGHT_PURPLE + "⬢ Running " + algorithmName +
                         (algorithmChoice != 2 ? " with " + heuristicName + " heuristic" : "") +
-                        "...");
+                        "..." + RESET);
 
                 printLoadingAnimation();
 
@@ -162,29 +189,29 @@ public class Main {
                 long endTime = System.currentTimeMillis();
                 long executionTime = endTime - startTime;
 
-                System.out.println("\n" + "══════════ RESULTS ══════════");
-                System.out.println("⬢ Algorithm: " + algorithmName);
+                System.out.println("\n" + BOLD + BG_BLUE + "══════════ RESULTS ══════════" + RESET);
+                System.out.println(BOLD + BRIGHT_CYAN + "⬢ Algorithm: " + RESET + BRIGHT_WHITE + algorithmName + RESET);
 
                 if (algorithmChoice != 2) {
-                    System.out.println("⬢ Heuristic: " + heuristicName);
+                    System.out.println(BOLD + BRIGHT_CYAN + "⬢ Heuristic: " + RESET + BRIGHT_WHITE + heuristicName + RESET);
                 }
 
-                System.out.println("⬢ Execution time: " + executionTime + " ms");
-                System.out.println("⬢ Nodes visited: " + solver.getNodesVisited());
+                System.out.println(BOLD + BRIGHT_CYAN + "⬢ Execution time: " + RESET + BRIGHT_WHITE + executionTime + " ms" + RESET);
+                System.out.println(BOLD + BRIGHT_CYAN + "⬢ Nodes visited: " + RESET + BRIGHT_WHITE + solver.getNodesVisited() + RESET);
 
                 if (solution != null) {
                     int moveCount = solution.getMoves().size();
-                    System.out.println("\n✓ SOLUTION FOUND! " +
-                            "Number of moves: " + moveCount);
+                    System.out.println(BOLD + BRIGHT_GREEN + "\n✓ SOLUTION FOUND! " + RESET +
+                            BRIGHT_WHITE + "Number of moves: " + moveCount + RESET);
 
-                    System.out.println("══════════ SOLUTION STEPS ══════════");
+                    System.out.println(BOLD + BG_BLUE + "══════════ SOLUTION STEPS ══════════" + RESET);
 
                     solution.printStepsAnimated();
 
                     boolean validSaveChoice = false;
                     while (!validSaveChoice) {
-                        System.out.println("\n" + "⬢ Do you want to save the solution to a file? (y/n)");
-                        System.out.print("➤ ");
+                        System.out.println("\n" + BRIGHT_CYAN + "⬢ Do you want to save the solution to a file? (y/n)" + RESET);
+                        System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                         String saveToFile = scanner.nextLine();
 
                         if (saveToFile.equalsIgnoreCase("y") || saveToFile.equalsIgnoreCase("n")) {
@@ -193,37 +220,37 @@ public class Main {
                             if (saveToFile.equalsIgnoreCase("y")) {
                                 boolean validOutputPath = false;
                                 while (!validOutputPath) {
-                                    System.out.println("Enter output file path:");
-                                    System.out.print("➤ ");
+                                    System.out.println(BRIGHT_CYAN + "Enter output file path (.txt):" + RESET);
+                                    System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                                     String outputPath = scanner.nextLine();
 
                                     if (outputPath.trim().isEmpty()) {
-                                        System.out.println("✗ Output path cannot be empty. Please try again.");
+                                        System.out.println(BRIGHT_RED + "✗ Output path cannot be empty. Please try again." + RESET);
                                     } else {
                                         try {
                                             solution.saveToFile(outputPath);
-                                            System.out.println("✓ Solution saved to " + outputPath);
+                                            System.out.println(BRIGHT_GREEN + "✓ Solution saved to " + outputPath + RESET);
                                             validOutputPath = true;
                                         } catch (IOException e) {
-                                            System.out.println("✗ Error saving file: " + e.getMessage() +
-                                                    ". Please try another path.");
+                                            System.out.println(BRIGHT_RED + "✗ Error saving file: " + e.getMessage() +
+                                                    ". Please try another path." + RESET);
                                         }
                                     }
                                 }
                             }
                         } else {
-                            System.out.println("✗ Invalid input. Please enter 'y' or 'n'.");
+                            System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter 'y' or 'n'." + RESET);
                         }
                     }
                 } else {
-                    System.out.println("\n✗ NO SOLUTION FOUND!");
-                    System.out.println("The puzzle may be unsolvable or require more resources than available.");
+                    System.out.println(BOLD + BRIGHT_RED + "\n✗ NO SOLUTION FOUND!" + RESET);
+                    System.out.println(YELLOW + "The puzzle may be unsolvable or require more resources than available." + RESET);
                 }
 
                 boolean validContinueChoice = false;
                 while (!validContinueChoice) {
-                    System.out.println("\n" + "⬢ Do you want to run another test? (y/n)");
-                    System.out.print("➤ ");
+                    System.out.println("\n" + BRIGHT_CYAN + "⬢ Do you want to run another test? (y/n)" + RESET);
+                    System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                     String continueChoice = scanner.nextLine();
 
                     if (continueChoice.equalsIgnoreCase("y")) {
@@ -232,7 +259,7 @@ public class Main {
                         validContinueChoice = true;
                         continueProgram = false;
                     } else {
-                        System.out.println("✗ Invalid input. Please enter 'y' or 'n'.");
+                        System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter 'y' or 'n'." + RESET);
                     }
                 }
 
@@ -240,35 +267,35 @@ public class Main {
                     if (initialBoard != null) {
                         boolean validReuseChoice = false;
                         while (!validReuseChoice) {
-                            System.out.println("\n" + "⬢ Do you want to reuse the same puzzle file? (y/n)");
-                            System.out.print("➤ ");
+                            System.out.println("\n" + BRIGHT_CYAN + "⬢ Do you want to reuse the same puzzle file? (y/n)" + RESET);
+                            System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                             String reuseChoice = scanner.nextLine();
 
                             if (reuseChoice.equalsIgnoreCase("y")) {
                                 validReuseChoice = true;
 
-                                System.out.println("✓ Reusing the same puzzle file.");
+                                System.out.println(BRIGHT_GREEN + "✓ Reusing the same puzzle file." + RESET);
 
-                                System.out.println("\n" + "⬢ Initial Board:");
+                                System.out.println("\n" + BOLD + BRIGHT_CYAN + "⬢ Initial Board:" + RESET);
                                 printBoardWithFrame(initialBoard);
                             } else if (reuseChoice.equalsIgnoreCase("n")) {
                                 validReuseChoice = true;
                                 initialBoard = null;
                                 continue;
                             } else {
-                                System.out.println("✗ Invalid input. Please enter 'y' or 'n'.");
+                                System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter 'y' or 'n'." + RESET);
                             }
                         }
                     }
                 }
             } catch (Exception e) {
-                System.out.println("✗ Unexpected error: " + e.getMessage());
+                System.out.println(BRIGHT_RED + "✗ Unexpected error: " + e.getMessage() + RESET);
                 e.printStackTrace();
 
                 boolean validContinueAfterErrorChoice = false;
                 while (!validContinueAfterErrorChoice) {
-                    System.out.println("Do you want to continue? (y/n)");
-                    System.out.print("➤ ");
+                    System.out.println(BRIGHT_CYAN + "Do you want to continue? (y/n)" + RESET);
+                    System.out.print(BRIGHT_YELLOW + "➤ " + RESET);
                     String continueAfterError = scanner.nextLine();
 
                     if (continueAfterError.equalsIgnoreCase("y")) {
@@ -277,49 +304,49 @@ public class Main {
                         validContinueAfterErrorChoice = true;
                         continueProgram = false;
                     } else {
-                        System.out.println("✗ Invalid input. Please enter 'y' or 'n'.");
+                        System.out.println(BRIGHT_RED + "✗ Invalid input. Please enter 'y' or 'n'." + RESET);
                     }
                 }
             }
         }
 
-        System.out.println("\n" + "══════════ THANK YOU FOR USING RUSH HOUR SOLVER! ══════════");
+        System.out.println("\n" + BOLD + BG_PURPLE + "══════════ THANK YOU FOR USING RUSH HOUR SOLVER! ══════════" + RESET);
         scanner.close();
     }
 
     private static void printAlgorithmMenu() {
-        System.out.println("╔════╦═══════════════════════════════════════╗");
-        System.out.println("║" + " 1  " + "║" + " Greedy Best First Search              " + "║");
-        System.out.println("╠════╬═══════════════════════════════════════╣");
-        System.out.println("║" + " 2  " + "║" + " Uniform Cost Search (UCS)             " + "║");
-        System.out.println("╠════╬═══════════════════════════════════════╣");
-        System.out.println("║" + " 3  " + "║" + " A* Search                             " + "║");
-        System.out.println("╠════╬═══════════════════════════════════════╣");
-        System.out.println("║" + " 4  " + "║" + " Beam Search (Bonus)                   " + "║");
-        System.out.println("╚════╩═══════════════════════════════════════╝");
+        System.out.println(BRIGHT_GREEN + "╔════╦═══════════════════════════════════════╗" + RESET);
+        System.out.println(BRIGHT_GREEN + "║" + BRIGHT_YELLOW + " 1  " + BRIGHT_GREEN + "║" + BRIGHT_WHITE + " Greedy Best First Search              " + BRIGHT_GREEN + "║" + RESET);
+        System.out.println(BRIGHT_GREEN + "╠════╬═══════════════════════════════════════╣" + RESET);
+        System.out.println(BRIGHT_GREEN + "║" + BRIGHT_YELLOW + " 2  " + BRIGHT_GREEN + "║" + BRIGHT_WHITE + " Uniform Cost Search (UCS)             " + BRIGHT_GREEN + "║" + RESET);
+        System.out.println(BRIGHT_GREEN + "╠════╬═══════════════════════════════════════╣" + RESET);
+        System.out.println(BRIGHT_GREEN + "║" + BRIGHT_YELLOW + " 3  " + BRIGHT_GREEN + "║" + BRIGHT_WHITE + " A* Search                             " + BRIGHT_GREEN + "║" + RESET);
+        System.out.println(BRIGHT_GREEN + "╠════╬═══════════════════════════════════════╣" + RESET);
+        System.out.println(BRIGHT_GREEN + "║" + BRIGHT_YELLOW + " 4  " + BRIGHT_GREEN + "║" + BRIGHT_WHITE + " Beam Search (Bonus)                   " + BRIGHT_GREEN + "║" + RESET);
+        System.out.println(BRIGHT_GREEN + "╚════╩═══════════════════════════════════════╝" + RESET);
     }
 
     private static void printHeuristicMenu() {
-        System.out.println("╔════╦═══════════════════════════════════════╗");
-        System.out.println("║" + " 1  " + "║" + " Manhattan Distance to Exit            " + "║");
-        System.out.println("╠════╬═══════════════════════════════════════╣");
-        System.out.println("║" + " 2  " + "║" + " Blocking Vehicles Count               " + "║");
-        System.out.println("╚════╩═══════════════════════════════════════╝");
+        System.out.println(BRIGHT_BLUE + "╔════╦═══════════════════════════════════════╗" + RESET);
+        System.out.println(BRIGHT_BLUE + "║" + BRIGHT_YELLOW + " 1  " + BRIGHT_BLUE + "║" + BRIGHT_WHITE + " Manhattan Distance to Exit            " + BRIGHT_BLUE + "║" + RESET);
+        System.out.println(BRIGHT_BLUE + "╠════╬═══════════════════════════════════════╣" + RESET);
+        System.out.println(BRIGHT_BLUE + "║" + BRIGHT_YELLOW + " 2  " + BRIGHT_BLUE + "║" + BRIGHT_WHITE + " Blocking Vehicles Count               " + BRIGHT_BLUE + "║" + RESET);
+        System.out.println(BRIGHT_BLUE + "╚════╩═══════════════════════════════════════╝" + RESET);
     }
 
     private static void printLoadingAnimation() {
         String[] frames = {"⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"};
         try {
             for (int i = 0; i < 20; i++) {
-                System.out.print("\r" + frames[i % frames.length] +
-                        " Solving puzzle... " + (i * 5) + "%");
+                System.out.print("\r" + BRIGHT_CYAN + frames[i % frames.length] +
+                        " Solving puzzle... " + (i * 5) + "%" + RESET);
                 Thread.sleep(100);
             }
-            System.out.println("\r" + "✓ Puzzle solved!                 ");
+            System.out.println("\r" + BRIGHT_GREEN + "✓ Puzzle solved!                 " + RESET);
         } catch (InterruptedException e) {}
     }
 
-    private static void printBoardWithFrame(Board board) {
+        private static void printBoardWithFrame(Board board) {
         char[][] grid = board.getGrid();
         int rows = board.getRows();
         int cols = board.getCols();
@@ -359,29 +386,29 @@ public class Main {
             }
             
             if (isSolved) {
-                System.out.println("K " + "PP (Berhasil Keluar)");
+                System.out.println(BRIGHT_GREEN + "K " + BRIGHT_RED + "PP (Berhasil Keluar)" + RESET);
             } else {
-                System.out.println("K");
+                System.out.println(BRIGHT_GREEN + "K" + RESET);
             }
         }
 
         if (exitSide == 'L') {
-            System.out.print(" " + "╔");
+            System.out.print(" " + BRIGHT_CYAN + "╔");
         } else {
-            System.out.print("╔");
+            System.out.print(BRIGHT_CYAN + "╔");
         }
 
         for (int j = 0; j < cols; j++) {
             System.out.print("═");
         }
-        System.out.println("╗");
+        System.out.println("╗" + RESET);
 
         for (int i = 0; i < rows; i++) {
             if (exitSide == 'L' && i == primaryRow) {
                 if (isSolved) {
-                    System.out.print("K " + "PP ");
+                    System.out.print(BRIGHT_GREEN + "K " + BRIGHT_RED + "PP " + RESET);
                 } else {
-                    System.out.print("K");
+                    System.out.print(BRIGHT_GREEN + "K" + RESET);
                 }
             } else {
                 if (exitSide == 'L') {
@@ -389,47 +416,47 @@ public class Main {
                 }
             }
             
-            System.out.print("║");
+            System.out.print(BRIGHT_CYAN + "║" + RESET);
 
             for (int j = 0; j < cols; j++) {
                 char cell = grid[i][j];
                 if (cell == 'P') {
-                    System.out.print(cell);
+                    System.out.print(BRIGHT_RED + cell + RESET);
                 } else if (cell == '.') {
-                    System.out.print("·");
+                    System.out.print(BRIGHT_WHITE + "·" + RESET);
                 } else if (cell == 'K') {
-                    System.out.print("·");
+                    System.out.print(BRIGHT_WHITE + "·" + RESET);
                 } else {
-                    System.out.print(cell);
+                    System.out.print(BRIGHT_BLUE + cell + RESET);
                 }
             }
 
             if (exitSide == 'R' && i == primaryRow) {
-                System.out.print("║" + "K");
+                System.out.print(BRIGHT_CYAN + "║" + RESET + BRIGHT_GREEN + "K" + RESET);
                 if (isSolved) {
-                    System.out.print(" " + "PP (Berhasil Keluar)");
+                    System.out.print(" " + BRIGHT_RED + "PP (Berhasil Keluar)" + RESET);
                 }
             } else {
-                System.out.print("║");
+                System.out.print(BRIGHT_CYAN + "║" + RESET);
             }
             
             if (exitSide == 'L' && i == primaryRow && isSolved) {
-                System.out.print("(Berhasil Keluar)");
+                System.out.print(BRIGHT_RED + "(Berhasil Keluar)" + RESET);
             }
             
             System.out.println();
         }
 
         if (exitSide == 'L') {
-            System.out.print(" " + "╚");
+            System.out.print(" " + BRIGHT_CYAN + "╚");
         } else {
-            System.out.print("╚");
+            System.out.print(BRIGHT_CYAN + "╚");
         }
 
         for (int j = 0; j < cols; j++) {
             System.out.print("═");
         }
-        System.out.println("╝");
+        System.out.println("╝" + RESET);
 
         if (exitSide == 'B') {
             System.out.print(" ");
@@ -439,16 +466,16 @@ public class Main {
             }
             
             if (isSolved) {
-                System.out.print("K " + "PP (Berhasil Keluar)");
+                System.out.print(BRIGHT_GREEN + "K " + BRIGHT_RED + "PP (Berhasil Keluar)" + RESET);
             } else {
-                System.out.print("K");
+                System.out.print(BRIGHT_GREEN + "K" + RESET);
             }
             System.out.println();
         }
 
-        System.out.println("■ " + "Primary Vehicle (P)  " +
-                "■ " + "Exit (K)  " +
-                "■ " + "Other Vehicles");
+        System.out.println(BRIGHT_RED + "■ " + RESET + "Primary Vehicle (P)  " +
+                BRIGHT_GREEN + "■ " + RESET + "Exit (K)  " +
+                BRIGHT_BLUE + "■ " + RESET + "Other Vehicles");
     }
 
     private static Board readInputFile(String filePath) throws IOException {
@@ -595,7 +622,7 @@ public class Main {
             }
             
             if (externalKRow == -1 && externalKCol == -1) {
-                throw new IOException("No exit (K) found outside the grid or at any edge");
+                throw new IOException("No exit (K) found at any edge");
             }
             
             int actualVehicleCount = 0;
@@ -612,9 +639,9 @@ public class Main {
             }
             
             if (actualVehicleCount != numNonPrimaryVehicles) {
-                System.out.println("Warning: Number of non-primary vehicles in file (" +
+                System.out.println(YELLOW + "Warning: Number of non-primary vehicles in file (" +
                         numNonPrimaryVehicles + ") doesn't match actual count (" +
-                        actualVehicleCount + ")");
+                        actualVehicleCount + ")" + RESET);
             }
             
             Board board = new Board(grid, rows, cols);
@@ -651,7 +678,7 @@ public class Main {
             }
         }
     }
-
+    
     private static String getHeuristicName(int choice) {
         switch (choice) {
             case 1:
