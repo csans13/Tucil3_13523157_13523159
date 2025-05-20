@@ -289,11 +289,51 @@ public class Solution {
         FileWriter writer = new FileWriter(filePath);
 
         writer.write("Papan Awal\n");
-        writer.write(path.get(0).getBoard().toString());
+        char[][] grid = path.get(0).getBoard().getGrid();
+        int rows = path.get(0).getBoard().getRows();
+        int cols = path.get(0).getBoard().getCols();
+
+        int externalKRow = path.get(0).getBoard().getExternalKRow();
+        int externalKCol = path.get(0).getBoard().getExternalKCol();
+        char exitSide = path.get(0).getBoard().getExitSide();
+
+        StringBuilder save = new StringBuilder();
+        if (exitSide == 'T') {
+            for (int j = 0; j < externalKCol; j++) {
+                save.append(" ");
+            }
+            save.append("K\n");
+        }
+        for (int i = 0; i < rows; i++) {
+            if (exitSide == 'L') {
+                if (i == externalKRow) {
+                    save.append("K");
+                } else {
+                    save.append(" ");
+                }
+            }
+            for (int j = 0; j < cols; j++) {
+                save.append(grid[i][j]);
+            }
+            if (exitSide == 'R') {
+                if (i == externalKRow) {
+                    save.append("K");
+                }
+            }
+            save.append("\n");
+        }
+        if (exitSide == 'B') {
+            for (int j = 0; j < externalKCol; j++) {
+                save.append(" ");
+            }
+            save.append("K\n");
+        }
+
+        writer.write(save.toString());
         writer.write("\n");
 
-        for (int i = 1; i < path.size(); i++) {
-            Node move = path.get(i);
+        for (int index = 1; index < path.size(); index++) {
+            Node move = path.get(index);
 
             String direction;
             Piece piece = move.getBoard().getPieces().get(move.getPieceIdx());
@@ -304,8 +344,54 @@ public class Solution {
                 direction = move.getMoveAmount() > 0 ? "down" : "up";
             }
 
-            writer.write("Gerakan " + i + ": " + piece.getId() + "-" + direction + "\n");
-            writer.write(move.getBoard().toString());
+            writer.write("Gerakan " + index + ": " + piece.getId() + "-" + direction + "\n");
+            grid = move.getBoard().getGrid();
+            boolean isSolved = move.getBoard().isSolved();
+
+            save = new StringBuilder();
+            if (exitSide == 'T') {
+                for (int j = 0; j < externalKCol; j++) {
+                    save.append(" ");
+                }
+                save.append("K\n");
+            }
+            for (int i = 0; i < rows; i++) {
+                if (exitSide == 'L') {
+                    if (i == externalKRow) {
+                        save.append("K");
+                    } else {
+                        save.append(" ");
+                    }
+                }
+                for (int j = 0; j < cols; j++) {
+                    if (isSolved && grid[i][j] == 'P') {
+                        if ((exitSide == 'R' && i == externalKRow && j != cols - 1) ||
+                            (exitSide == 'L' && i == externalKRow && j != 0) ||
+                            (exitSide == 'T' && j == externalKCol && i != 0) ||
+                            (exitSide == 'B' && j == externalKCol && i != rows - 1)) {
+                            save.append('.');
+                        } else {
+                            save.append('P');
+                        }
+                    } else {
+                        save.append(grid[i][j]);
+                    }
+                }
+                if (exitSide == 'R') {
+                    if (i == externalKRow) {
+                        save.append("K");
+                    }
+                }
+                save.append("\n");
+            }
+            if (exitSide == 'B') {
+                for (int j = 0; j < externalKCol; j++) {
+                    save.append(" ");
+                }
+                save.append("K\n");
+            }
+
+            writer.write(save.toString());
             writer.write("\n");
         }
 
