@@ -37,6 +37,8 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean continueProgram = true;
 
+        printWelcomeBanner();
+
         Board initialBoard = null;
 
         while (continueProgram) {
@@ -314,6 +316,40 @@ public class Main {
         scanner.close();
     }
 
+    private static void printWelcomeBanner() {
+        String[] banner = {
+                "╔═══════════════════════════════════════════════════════════════════════════╗",
+                "║                                                                           ║",
+                "║  ██████╗ ██╗   ██╗███████╗██╗  ██╗    ██╗  ██╗ ██████╗ ██╗   ██╗██████╗   ║",
+                "║  ██╔══██╗██║   ██║██╔════╝██║  ██║    ██║  ██║██╔═══██╗██║   ██║██╔══██╗  ║",
+                "║  ██████╔╝██║   ██║███████╗███████║    ███████║██║   ██║██║   ██║██████╔╝  ║",
+                "║  ██╔══██╗██║   ██║╚════██║██╔══██║    ██╔══██║██║   ██║██║   ██║██╔══██╗  ║",
+                "║  ██║  ██║╚██████╔╝███████║██║  ██║    ██║  ██║╚██████╔╝╚██████╔╝██║  ██║  ║",
+                "║  ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝  ║",
+                "║                                                                           ║",
+                "║              ██████╗ ██╗   ██╗███████╗███████╗██╗     ███████╗            ║",
+                "║              ██╔══██╗██║   ██║╚══███╔╝╚══███╔╝██║     ██╔════╝            ║",
+                "║              ██████╔╝██║   ██║  ███╔╝   ███╔╝ ██║     █████╗              ║",
+                "║              ██╔═══╝ ██║   ██║ ███╔╝   ███╔╝  ██║     ██╔══╝              ║",
+                "║              ██║     ╚██████╔╝███████╗███████╗███████╗███████╗            ║",
+                "║              ╚═╝      ╚═════╝ ╚══════╝╚══════╝╚══════╝╚══════╝            ║",
+                "║                                                                           ║",
+                "║                     SOLVER WITH PATHFINDING ALGORITHMS                    ║",
+                "║                                                                           ║",
+                "╚═══════════════════════════════════════════════════════════════════════════╝"
+        };
+
+         // Print each line with different colors for a rainbow effect
+        String[] colors = {BRIGHT_RED, BRIGHT_YELLOW, BRIGHT_GREEN, BRIGHT_CYAN, BRIGHT_BLUE, BRIGHT_PURPLE};
+        for (int i = 0; i < banner.length; i++) {
+            System.out.println(colors[i % colors.length] + banner[i] + RESET);
+        }
+
+        System.out.println("\n" + BRIGHT_CYAN + "IF2211 Strategi Algoritma - Tugas Kecil 3" + RESET);
+        System.out.println(YELLOW + "Penyelesaian Puzzle Rush Hour Menggunakan Algoritma Pathfinding" + RESET);
+        System.out.println(BRIGHT_GREEN + "--------------------------------------------------------------" + RESET);
+    }
+
     private static void printAlgorithmMenu() {
         System.out.println(BRIGHT_GREEN + "╔════╦═══════════════════════════════════════╗" + RESET);
         System.out.println(BRIGHT_GREEN + "║" + BRIGHT_YELLOW + " 1  " + BRIGHT_GREEN + "║" + BRIGHT_WHITE + " Greedy Best First Search              " + BRIGHT_GREEN + "║" + RESET);
@@ -478,7 +514,7 @@ public class Main {
                 BRIGHT_BLUE + "■ " + RESET + "Other Vehicles");
     }
 
-    private static Board readInputFile(String filePath) throws IOException {
+        private static Board readInputFile(String filePath) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String dimensionLine = reader.readLine();
             if (dimensionLine == null) {
