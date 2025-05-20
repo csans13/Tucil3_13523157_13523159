@@ -116,6 +116,13 @@ public class Solution {
                     }
                     
                     if (index == 0) {
+                        if (primaryPiece.getLength() == 3) {
+                            System.out.println(BRIGHT_RED + "P" + RESET);
+                            System.out.print(" ");
+                            for (int j = 0; j < primaryCol; j++) {
+                                System.out.print(" ");
+                            }
+                        }
                         System.out.println(BRIGHT_RED + "P (Berhasil Keluar)" + RESET);
                     } else if (index == 1) {
                         System.out.println(BRIGHT_RED + "P" + RESET);
@@ -137,6 +144,9 @@ public class Solution {
         }
 
         if (exitSide == 'L' && isSolved) {
+            if (primaryPiece.getLength() == 3) {
+                System.out.print(" ");
+            }
             System.out.print("    " + BRIGHT_CYAN + "╔");
         } else if (exitSide == 'L') {
             System.out.print(" " + BRIGHT_CYAN + "╔");
@@ -152,12 +162,18 @@ public class Solution {
         for (int i = 0; i < rows; i++) {
             if (exitSide == 'L' && i == primaryRow) {
                 if (isSolved) {
+                    if (primaryPiece.getLength() == 3) {
+                        System.out.print(BRIGHT_RED + "P" + RESET);
+                    }
                     System.out.print(BRIGHT_RED + "PP " + BRIGHT_GREEN + "K" + RESET);
                 } else {
                     System.out.print(BRIGHT_GREEN + "K" + RESET);
                 }
             } else {
                 if (exitSide == 'L' && isSolved) {
+                    if (primaryPiece.getLength() == 3) {
+                        System.out.print(" ");
+                    }
                     System.out.print("    ");
                 } else if (exitSide == 'L') {
                     System.out.print(" ");
@@ -189,6 +205,9 @@ public class Solution {
             if (exitSide == 'R' && i == primaryRow) {
                 System.out.print(BRIGHT_CYAN + "║" + RESET + BRIGHT_GREEN + "K " + RESET);
                 if (isSolved) {
+                    if (primaryPiece.getLength() == 3) {
+                        System.out.print(BRIGHT_RED + "P" + RESET);
+                    }
                     System.out.print(BRIGHT_RED + "PP (Berhasil Keluar)" + RESET);
                 }
             } else {
@@ -203,6 +222,9 @@ public class Solution {
         }
 
         if (exitSide == 'L' && isSolved) {
+            if (primaryPiece.getLength() == 3) {
+                System.out.print(" ");
+            }
             System.out.print("    " + BRIGHT_CYAN + "╚");
         } else if (exitSide == 'L') {
             System.out.print(" " + BRIGHT_CYAN + "╚");
@@ -232,6 +254,13 @@ public class Solution {
                         System.out.println(BRIGHT_RED + "P" + RESET);
                     } else if (index == 3) {
                         System.out.println(BRIGHT_RED + "P (Berhasil Keluar)" + RESET);
+                        if (primaryPiece.getLength() == 3) {
+                            System.out.print(" ");
+                            for (int j = 0; j < primaryCol; j++) {
+                                System.out.print(" ");
+                            }
+                            System.out.println(BRIGHT_RED + "P" + RESET);
+                        }
                     }
                 }
             } else {
