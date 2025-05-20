@@ -566,19 +566,25 @@ public class Main {
             int externalKRow = -1;
             int externalKCol = -1;
             char exitSide = 'R';
+            boolean topExit = false, leftExit = false, rightExit = false, bottomExit = false;
 
             String line = reader.readLine();
             if (line == null) throw new IOException("Unexpected end of file when reading grid");
             originalLines.add(line);
 
             if (line.trim().indexOf('K') >= 0 && line.trim().length() <= cols) {
+                if (line.trim().length() > 1) {
+                    throw new IOException("Invalid board dimensions");
+                }
                 exitSide = 'T';
                 externalKCol = line.indexOf('K');
+                topExit = true;
                 line = reader.readLine();
                 if (line == null) throw new IOException("Unexpected end of file after top K row");
                 originalLines.add(line);
             }
 
+            int horizontalExit = 0;
             for (int rowIdx = 0; rowIdx < rows; rowIdx++) {
                 String currentLine = (rowIdx == 0) ? line : reader.readLine();
                 if (currentLine == null) {
@@ -586,8 +592,8 @@ public class Main {
                 }
 
                 String trimmed = currentLine.trim();
-                boolean leftExit = trimmed.startsWith("K");
-                boolean rightExit = trimmed.endsWith("K") && trimmed.length() > 1;
+                leftExit = trimmed.startsWith("K");
+                rightExit = trimmed.endsWith("K") && trimmed.length() > 1;
 
                 int nonSpaceCount = 0;
                 for (char c : currentLine.toCharArray()) {
@@ -627,14 +633,25 @@ public class Main {
                 else {
                     fillGridRow(grid, rowIdx, currentLine);
                 }
+
+                if (leftExit) horizontalExit++;
+                if (rightExit) horizontalExit++;
+
+                if (horizontalExit > 1) {
+                    throw new IOException("More than one exit (K) found");
+                }
             }
 
             String bottomLine = reader.readLine();
             if (bottomLine != null && bottomLine.trim().length() > 0) {
                 if (bottomLine.trim().indexOf('K') >= 0 && bottomLine.trim().length() <= cols) {
+                    if (bottomLine.trim().length() > 1) {
+                        throw new IOException("Invalid board dimensions");
+                    }
                     originalLines.add(bottomLine);
                     exitSide = 'B';
                     externalKCol = bottomLine.indexOf('K');
+                    bottomExit = true;
                     String afterBottomK = reader.readLine();
                     while (afterBottomK != null && afterBottomK.trim().isEmpty()) {
                         afterBottomK = reader.readLine();
@@ -645,6 +662,14 @@ public class Main {
                 } else {
                     throw new IOException("Invalid board dimensions");
                 }
+            }
+
+            if ((topExit && rightExit) ||
+                (topExit && leftExit) ||
+                (topExit && bottomExit) ||
+                (rightExit && bottomExit) ||
+                (leftExit && bottomExit)) {
+                throw new IOException("Error: More than one exit (K) found");
             }
 
             int primaryPieceRow = -1;
@@ -671,6 +696,12 @@ public class Main {
                 } else if ((exitSide == 'T' || exitSide == 'B') && primaryIsHorizontal) {
                     throw new IOException("Exit orientation (vertical) doesn't match primary piece orientation (horizontal)");
                 }
+            }
+
+            if ((primaryPieceRow != externalKRow) && primaryIsHorizontal) {
+                throw new IOException("Exit (K) is not aligned in the same row as the primary piece (P)");
+            } else if ((primaryPieceCol != externalKCol) && !primaryIsHorizontal) {
+                throw new IOException("Exit (K) is not aligned in the same column as the primary piece (P)");
             }
 
             boolean hasPrimary = primaryPieceRow >= 0;
