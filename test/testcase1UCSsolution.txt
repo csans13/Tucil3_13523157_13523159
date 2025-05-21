@@ -1,0 +1,224 @@
+Papan Awal
+AAA.BC
+FG..BC
+FGPPH.K
+IIJ.H.
+..JMM.
+LLL...
+
+Gerakan 1: A-right
+.AAABC
+FG..BC
+FGPPH.K
+IIJ.H.
+..JMM.
+LLL...
+
+Gerakan 2: L-right
+.AAABC
+FG..BC
+FGPPH.K
+IIJ.H.
+..JMM.
+...LLL
+
+Gerakan 3: F-up
+FAAABC
+FG..BC
+.GPPH.K
+IIJ.H.
+..JMM.
+...LLL
+
+Gerakan 4: J-down
+FAAABC
+FG..BC
+.GPPH.K
+II..H.
+..JMM.
+..JLLL
+
+Gerakan 5: I-right
+FAAABC
+FG..BC
+.GPPH.K
+..IIH.
+..JMM.
+..JLLL
+
+Gerakan 6: G-down
+FAAABC
+F...BC
+..PPH.K
+..IIH.
+.GJMM.
+.GJLLL
+
+Gerakan 7: I-left
+FAAABC
+F...BC
+..PPH.K
+II..H.
+.GJMM.
+.GJLLL
+
+Gerakan 8: P-left
+FAAABC
+F...BC
+PP..H.K
+II..H.
+.GJMM.
+.GJLLL
+
+Gerakan 9: J-up
+FAAABC
+F.J.BC
+PPJ.H.K
+II..H.
+.G.MM.
+.G.LLL
+
+Gerakan 10: M-left
+FAAABC
+F.J.BC
+PPJ.H.K
+II..H.
+.GMM..
+.G.LLL
+
+Gerakan 11: H-down
+FAAABC
+F.J.BC
+PPJ...K
+II..H.
+.GMMH.
+.G.LLL
+
+Gerakan 12: B-down
+FAAA.C
+F.J.BC
+PPJ.B.K
+II..H.
+.GMMH.
+.G.LLL
+
+Gerakan 13: I-right
+FAAA.C
+F.J.BC
+PPJ.B.K
+..IIH.
+.GMMH.
+.G.LLL
+
+Gerakan 14: C-down
+FAAA..
+F.J.B.
+PPJ.B.K
+..IIHC
+.GMMHC
+.G.LLL
+
+Gerakan 15: A-right
+F..AAA
+F.J.B.
+PPJ.B.K
+..IIHC
+.GMMHC
+.G.LLL
+
+Gerakan 16: J-up
+F.JAAA
+F.J.B.
+PP..B.K
+..IIHC
+.GMMHC
+.G.LLL
+
+Gerakan 17: P-right
+F.JAAA
+F.J.B.
+..PPB.K
+..IIHC
+.GMMHC
+.G.LLL
+
+Gerakan 18: G-up
+FGJAAA
+FGJ.B.
+..PPB.K
+..IIHC
+..MMHC
+...LLL
+
+Gerakan 19: M-left
+FGJAAA
+FGJ.B.
+..PPB.K
+..IIHC
+MM..HC
+...LLL
+
+Gerakan 20: I-left
+FGJAAA
+FGJ.B.
+..PPB.K
+II..HC
+MM..HC
+...LLL
+
+Gerakan 21: P-left
+FGJAAA
+FGJ.B.
+PP..B.K
+II..HC
+MM..HC
+...LLL
+
+Gerakan 22: J-down
+FG.AAA
+FG..B.
+PP..B.K
+IIJ.HC
+MMJ.HC
+...LLL
+
+Gerakan 23: P-right
+FG.AAA
+FG..B.
+..PPB.K
+IIJ.HC
+MMJ.HC
+...LLL
+
+Gerakan 24: G-down
+F..AAA
+FG..B.
+.GPPB.K
+IIJ.HC
+MMJ.HC
+...LLL
+
+Gerakan 25: A-left
+FAAA..
+FG..B.
+.GPPB.K
+IIJ.HC
+MMJ.HC
+...LLL
+
+Gerakan 26: B-up
+FAAAB.
+FG..B.
+.GPP..K
+IIJ.HC
+MMJ.HC
+...LLL
+
+Gerakan 27: P-right
+FAAAB.
+FG..B.
+.G...PK
+IIJ.HC
+MMJ.HC
+...LLL
+
