@@ -15,7 +15,6 @@ public class Board {
     private List<String> originalLines;
     private int externalKRow = -1; 
     private int externalKCol = -1; 
-    private static final boolean DEBUG = false; // Buat debugging
 
     // Constructor
     public Board(char[][] grid, int rows, int cols) {
@@ -34,12 +33,6 @@ public class Board {
         pieces = new ArrayList<>();
         findExit();
         extractPieces();
-    }
-
-    private void log(String message) {
-        if (DEBUG) {
-            System.out.println(message);
-        }
     }
 
     // Buat copy dari board
@@ -68,8 +61,7 @@ public class Board {
         newBoard.externalKCol = this.externalKCol;
         newBoard.originalLines = this.originalLines;
         if (pieces.size() != newBoard.pieces.size()) {
-            throw new IllegalStateException("Piece list size mismatch after copy: original=" +
-                                          pieces.size() + ", copy=" + newBoard.pieces.size());
+            throw new IllegalStateException("Piece list size mismatch after copy: original=" + pieces.size() + ", copy=" + newBoard.pieces.size());
         }
         return newBoard;
     }
@@ -80,7 +72,6 @@ public class Board {
             exitRow = externalKRow;
             exitCol = cols - 1;
             exitSide = 'R';
-            log("Right exit position set to (" + exitRow + "," + exitCol + ") based on external K");
             return;
         }
         for (int j = 0; j < cols; j++) {
@@ -88,7 +79,6 @@ public class Board {
                 exitRow = 0;
                 exitCol = j;
                 exitSide = 'T';
-                log("Top exit position set to (" + exitRow + "," + exitCol + ") based on external K");
                 return;
             }
         }
@@ -97,7 +87,6 @@ public class Board {
                 exitRow = rows - 1;
                 exitCol = j;
                 exitSide = 'B';
-                log("Bottom exit position set to (" + exitRow + "," + exitCol + ") based on external K");
                 return;
             }
         }
@@ -108,7 +97,6 @@ public class Board {
                     exitRow = i;
                     exitCol = 0;
                     exitSide = 'L';
-                    log("Left exit position set to (" + exitRow + "," + exitCol + ") based on external K");
                     return;
                 }
             }
@@ -126,7 +114,6 @@ public class Board {
                         exitCol = j;
                         exitSide = 'B';
                     }
-                    log("Exit position set to (" + exitRow + "," + exitCol + ") with side " + exitSide + " based on primary piece orientation");
                     return;
                 }
             }
@@ -134,7 +121,6 @@ public class Board {
         exitRow = rows / 2;
         exitCol = cols - 1;
         exitSide = 'R';
-        log("Default exit position set to (" + exitRow + "," + exitCol + ") with side " + exitSide);
     }
 
     // Ambil semua piece dari grid
@@ -196,7 +182,6 @@ public class Board {
                             exitSide = 'B';
                         }
                     }
-                    log("Exit position set based on primary piece: (" + exitRow + "," + exitCol + ") with side " + exitSide);
                 }
             }
         }
